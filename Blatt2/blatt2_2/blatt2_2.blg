@@ -1,5 +1,0 @@
-[0] Config.pm:354> INFO - This is Biber 2.7
-[0] Config.pm:357> INFO - Logfile is 'blatt2_2.blg'
-[52] biber-MSWIN64:303> INFO - === 
-[857] Utils.pm:180> ERROR - Cannot find control file 'blatt2_2.bcf'! - did you pass the "backend=biber" option to BibLaTeX?
-[857] Biber.pm:113> INFO - ERRORS: 1
