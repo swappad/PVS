@@ -1,0 +1,59 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage[section]{placeins}
+
+
+\title{Übungsblatt 1}
+
+\author{Luca Krüger \\ \href{mailto:luca.krueger@uni-ulm.de}{luca.krueger@uni-ulm.de}}
+\date{\today}
+
+\addtocounter{section}{1}
+
+
+\renewcommand{\thesubsection}{\alph{subsection})}
+
+\begin{document}
+\maketitle
+\section*{Aufgabe \thesection}
+	
+	\subsection{}
+	
+	\begin{table}[!h]
+		\centering
+		\begin{tabular}{l c c c}
+			&hungry&food&legs \\ \hline
+			Class Animal&\checkmark&\checkmark& \\
+			Class Bird&&\checkmark&\checkmark \\
+			Class Eagle&&\checkmark&\checkmark \\
+		\end{tabular}
+		\caption{Messtabelle für Versuch 1}
+		\label{tab:messtab1}
+	\end{table}
+
+	\subsection{}
+	
+	Overloading findet in der Methode "fly" in der Klasse "Bird" statt. Die beiden Methoden unterscheiden sich in diesem Fall durch die Anzahl der übergebenen Parameter.\\
+	Overriding der Funktion eat in der Klasse Bird.
+	
+	\subsection{}
+	
+	\begin{enumerate}
+		\item erlaubt.
+		\item erlaubt. Rückgabewert "32".
+		\item nicht erlaubt. Typecasts funktionieren höchstens zwischen Klassen, die voneinander erben.
+		\item erlaubt, wobei ein Typecast an dieser Stelle noch nicht einmal notwendig ist.
+		\item erlaubt. Rückgabewert "32".
+		\item erlaubt.
+		\item nicht erlaubt. fly ist private deklariert.
+		
+	\end{enumerate}
+	
+	
+
+\end{document}
