@@ -105,6 +105,7 @@ public class CreateDialog extends JDialog {
 		
 		// mouse listener for lists
 		MouseListener listMouseListener = new MouseListener() {
+
 			public void mouseReleased(MouseEvent arg0) {	
 			}
 			
@@ -119,25 +120,17 @@ public class CreateDialog extends JDialog {
 			
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
-					
-					
-					/**
-					 * 
-					 * 
-					 * 
-					 * 
-					 * 
-					 * Insert call for EditGroupDialog here.
-					 * 
-					 * 
-					 * 
-					 * 
-					 * 
-					 * 
-					 * 
-					 * 
-					 */	
-					
+					//EditGroupDialog
+					setModal(false);
+					JList list = (JList) arg0.getSource();
+					DefaultListModel model =(DefaultListModel) list.getModel();
+					int index = list.getSelectedIndex();
+					Object newName = EditGroupDialog.showEditGroupDialog("Gebe den Namen des neuen Teams ein", "Neuer Name",CtrlGroup.class.getResource("/data/config/teams.cfg"));
+
+					if(newName!=null)
+						model.set(index,(String) newName);
+					else return;
+					setModal(true);
 				}
 			}
 		};

@@ -10,6 +10,9 @@ public class Team implements java.lang.Comparable<Team> {
     private int loss;
     private int draw;
 
+    public Team(){
+
+    }
     public Team(String name, int points, int gf, int ga, int played, int won, int loss, int draw){
 
 
@@ -36,7 +39,7 @@ public class Team implements java.lang.Comparable<Team> {
     }
 
 
-    public String getStrName() {
+    public String getName() {
         return strName;
     }
 
@@ -68,7 +71,7 @@ public class Team implements java.lang.Comparable<Team> {
         return draw;
     }
 
-    public void setStrName(String strName) {
+    public void setName(String strName) {
         this.strName = strName;
     }
 

@@ -11,7 +11,7 @@ public class Main {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		CreateDialog cD = new CreateDialog(null, new SoccerWC());
-		cD.setVisible(true);
+		Mainframe mainframe = new Mainframe();
+		mainframe.setVisible(true);
 	}
 }
