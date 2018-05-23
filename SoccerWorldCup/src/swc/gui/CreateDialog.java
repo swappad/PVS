@@ -125,7 +125,7 @@ public class CreateDialog extends JDialog {
 					JList list = (JList) arg0.getSource();
 					DefaultListModel model =(DefaultListModel) list.getModel();
 					int index = list.getSelectedIndex();
-					Object newName = EditGroupDialog.showEditGroupDialog("Gebe den Namen des neuen Teams ein", "Neuer Name",CtrlGroup.class.getResource("/data/config/teams.cfg"));
+					Object newName = EditGroupDialog.showEditGroupDialog("Gebe den Namen des neuen Teams ein", "Neuer Name");
 
 					if(newName!=null)
 						model.set(index,(String) newName);
