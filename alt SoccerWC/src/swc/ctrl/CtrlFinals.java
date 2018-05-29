@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Vector;
 
 import swc.data.Game;
+import swc.data.Group;
 import swc.data.SoccerWC;
 import swc.data.Team;
 

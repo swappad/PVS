@@ -103,7 +103,9 @@ public class CreateDialog extends JDialog {
 			e1.printStackTrace();
 		}
 		
+		// mouse listener for lists
 		MouseListener listMouseListener = new MouseListener() {
+
 			public void mouseReleased(MouseEvent arg0) {	
 			}
 			
@@ -118,9 +120,17 @@ public class CreateDialog extends JDialog {
 			
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
-					JList list = (JList) arg0.getComponent();
-					EditGroupDialog egd = new EditGroupDialog(owner, list);
-					egd.setVisible(true);
+					//EditGroupDialog
+					setModal(false);
+					JList list = (JList) arg0.getSource();
+					DefaultListModel model =(DefaultListModel) list.getModel();
+					int index = list.getSelectedIndex();
+					Object newName = EditGroupDialog.showEditGroupDialog("Gebe den Namen des neuen Teams ein", "Neuer Name");
+
+					if(newName!=null)
+						model.set(index,(String) newName);
+					else return;
+					setModal(true);
 				}
 			}
 		};
@@ -332,8 +342,10 @@ public class CreateDialog extends JDialog {
 		try {
 			CtrlGroup.setNewWorldCup(worldCup, models, textFieldName.getText());
 		} catch (NumberFormatException e1) {
+			JOptionPane.showMessageDialog(this, "Error setting data!", "Create World Cup", JOptionPane.ERROR_MESSAGE);
 			e1.printStackTrace();
 		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(this, "Error setting data!", "Create World Cup", JOptionPane.ERROR_MESSAGE);
 			e1.printStackTrace();
 		}
 		this.successful = true;

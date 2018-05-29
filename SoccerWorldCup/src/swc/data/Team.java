@@ -1,106 +1,113 @@
 package swc.data;
 
-public class Team implements java.lang.Comparable<Team> {
-    private String strName;
-    private int points;
-    private int gf;
-    private int ga;
-    private int played;
-    private int won;
-    private int loss;
-    private int draw;
+public class Team implements Comparable <Team>{
+	
+	private String strName;
+	private int points;
+	private int gf;
+	private int ga;
+	private int played;
+	private int won;
+	private int loss;
+	private int draw;
 
-    public Team(){
+	public Team(){
+		
+	}
+	
+	public Team(String name, int points, int gf, int ga, int played, int won, int loss, int draw) {
+		this.setName(name);
+		this.setPoints(points);
+		this.setDraw(draw);
+		this.setGa(ga);
+		this.setGf(gf);
+		this.setLoss(loss);
+		this.setPlayed(played);
+		this.setWon(won);
+	}
 
-    }
-    public Team(String name, int points, int gf, int ga, int played, int won, int loss, int draw){
+	@Override
+	public int compareTo(Team arg0) {
+		if(this.points != arg0.points)
+			return (this.points > arg0.points ? -1 : 1);
+		else if(this.gf-this.ga != arg0.gf - arg0.ga)
+			return (this.gf-this.ga > arg0.gf - arg0.ga ? -1 : 1);
+		else if(this.gf != arg0.gf)
+			return (this.gf > arg0.gf ? -1 : 1);
+		return 0;
+	}
+	
+	public void clearTeam(){
+		setDraw(0);
+		setWon(0);
+		setLoss(0);
+		setGa(0);
+		setGf(0);
+		setPlayed(0);
+		setPoints(0);
+	}
+	
+	public String getName() {
+		return strName;
+	}
+	
+	public void setName(String name) {
+		this.strName = name;
+	}
 
+	public void setPoints(int points) {
+		this.points = points;
+	}
 
-    }
+	public int getPoints() {
+		return points;
+	}
 
-    @Override
-    public int compareTo(Team o) {
-       if(o.getPoints()!=points){
-           return (int)Math.signum(o.getPoints()-points);
-       }
-       if((o.getGa()-o.getGf()!=(ga-gf)))
-           return (int)Math.signum((o.getGa()-o.getGf())-(ga-gf));
-       return (int) Math.signum(o.getGa()-ga);
-    }
+	public void setGf(int gf) {
+		this.gf = gf;
+	}
 
-    public void clearTeam(){
-        points=0;
-        gf=0;
-        ga=0;
-        played=0;
-        won=0;
-        loss=0;
-        draw=0;
-    }
+	public int getGf() {
+		return gf;
+	}
 
+	public void setGa(int ga) {
+		this.ga = ga;
+	}
 
-    public String getName() {
-        return strName;
-    }
+	public int getGa() {
+		return ga;
+	}
 
-    public int getPoints() {
-        return points;
-    }
+	public void setPlayed(int played) {
+		this.played = played;
+	}
 
-    public int getGf() {
-        return gf;
-    }
+	public int getPlayed() {
+		return played;
+	}
 
-    public int getGa() {
-        return ga;
-    }
+	public void setWon(int won) {
+		this.won = won;
+	}
 
-    public int getPlayed() {
-        return played;
-    }
+	public int getWon() {
+		return won;
+	}
 
-    public int getWon() {
-        return won;
-    }
+	public void setLoss(int loss) {
+		this.loss = loss;
+	}
 
-    public int getLoss() {
-        return loss;
-    }
+	public int getLoss() {
+		return loss;
+	}
 
-    public int getDraw() {
-        return draw;
-    }
+	public void setDraw(int draw) {
+		this.draw = draw;
+	}
 
-    public void setName(String strName) {
-        this.strName = strName;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public void setGf(int gf) {
-        this.gf = gf;
-    }
-
-    public void setGa(int ga) {
-        this.ga = ga;
-    }
-
-    public void setPlayed(int played) {
-        this.played = played;
-    }
-
-    public void setWon(int won) {
-        this.won = won;
-    }
-
-    public void setLoss(int loss) {
-        this.loss = loss;
-    }
-
-    public void setDraw(int draw) {
-        this.draw = draw;
-    }
+	public int getDraw() {
+		return draw;
+	}
 }
-

@@ -1,17 +1,16 @@
 package swc.ctrl;
 
-import swc.gui.*;
-import swc.data.*;
+import swc.data.SoccerWC;
+import swc.gui.Mainframe;
 
 public class Main {
-	
-	public static void main(String[] args) {			
-		try {
-			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		Mainframe mainframe = new Mainframe();
-		mainframe.setVisible(true);
+
+	/**
+	 * @param args
+	 */
+	public static void main(String [] args){
+		Mainframe mainFrame = new Mainframe(new SoccerWC());
+		mainFrame.setVisible(true);	
 	}
+
 }
