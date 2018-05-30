@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -15,6 +16,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
 import swc.ctrl.CtrlGroup;
+import swc.data.Group;
 import swc.data.SoccerWC;
 
 
@@ -37,6 +39,9 @@ public class Mainframe extends javax.swing.JFrame {
 	/**
 	 * Initalizes components, listener, etc.
 	 */
+
+	//Grouptabs initialisieren
+
 	private void initComponents() {	
 		
 		//initialize Components
@@ -134,6 +139,20 @@ public class Mainframe extends javax.swing.JFrame {
 		contentPane.add(tabContainer);
 	}
 
+	public void initializeGroupTabs(){
+		if(worldCup!= null) {
+			tabContainer.removeAll();
+
+			ArrayList<GroupPanel> groupPanelList = new ArrayList<>();
+			for (Group group : worldCup.getGroups()) {
+				groupPanelList.add(new GroupPanel(group,this));
+				tabContainer.addTab(group.getStrGroupName(), groupPanelList.get(groupPanelList.size() - 1));
+
+			}
+			tabContainer.addTab("Final",new FinalPanel(worldCup.getFinals(),this));
+		}
+
+	}
 	protected void menuItemExitActionPerformed(ActionEvent e) {
 		this.dispose();
 		System.exit(0);
@@ -169,6 +188,7 @@ public class Mainframe extends javax.swing.JFrame {
 				
 				
 			}
+			initializeGroupTabs();
 		}
 	}
 
