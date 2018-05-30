@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 
 public class EditGameDialog extends JDialog {
@@ -46,11 +47,19 @@ public class EditGameDialog extends JDialog {
         apply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                successfull = ((
-                        inputTeamG = Integer.valueOf(inputGField.getText())) >= 0)
-                        && ((inputTeamH = Integer.valueOf(inputHField.getText())) >= 0
-                );
-                dispose();
+                try{
+                    inputTeamG= Integer.parseInt(inputGField.getText());
+                    inputTeamH = Integer.valueOf(inputHField.getText());
+                    if(inputTeamG<0||inputTeamH<0)
+                        throw new Exception();
+                    else successfull=true;
+                    dispose();
+                }catch(Exception e1){
+                    JOptionPane.showMessageDialog(contentpane, "Retry!", "Invalid input", JOptionPane.ERROR_MESSAGE);
+                    successfull=false;
+                }
+
+                
             }
         });
         cancel.addActionListener(new ActionListener() {
@@ -74,7 +83,8 @@ public class EditGameDialog extends JDialog {
             result[0] = editGameDialog.inputTeamG;
             result[1] = editGameDialog.inputTeamH;
             return result;
-        }else throw new Exception("NoValidInput");
+        }else throw new Exception();
+
 
     }
 
