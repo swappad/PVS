@@ -59,7 +59,7 @@ public class EditGameDialog extends JDialog {
                     successfull=false;
                 }
 
-                
+
             }
         });
         cancel.addActionListener(new ActionListener() {
