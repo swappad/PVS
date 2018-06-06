@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="9.0.1" class="java.beans.XMLDecoder">
+ <object class="aufgabe1.Mercedes">
+  <void property="capacity">
+   <int>500</int>
+  </void>
+  <void property="licensePlate">
+   <string>UL-M_12</string>
+  </void>
+  <void property="model">
+   <string>FakeMercedes</string>
+  </void>
+  <void property="numberDoors">
+   <int>5</int>
+  </void>
+  <void property="numberPassenger">
+   <int>6</int>
+  </void>
+  <void property="numberWhels">
+   <int>4</int>
+  </void>
+  <void property="productionDate">
+   <string>2017</string>
+  </void>
+ </object>
+ <object class="aufgabe1.Porsche">
+  <void property="licensePlate">
+   <string>HA-HA-7</string>
+  </void>
+  <void property="model">
+   <string>Oldtimer</string>
+  </void>
+  <void property="numberDoors">
+   <int>3</int>
+  </void>
+  <void property="numberPassenger">
+   <int>2</int>
+  </void>
+  <void property="numberWhels">
+   <int>4</int>
+  </void>
+  <void property="productionDate">
+   <string>1990</string>
+  </void>
+  <void property="ps">
+   <int>50</int>
+  </void>
+ </object>
+</java>
