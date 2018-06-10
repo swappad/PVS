@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
@@ -17,7 +16,6 @@ import swc.data.Game;
 import swc.data.Group;
 import swc.data.SoccerWC;
 import swc.data.Team;
-
 
 public class CtrlGroup {
 	
@@ -33,22 +31,6 @@ public class CtrlGroup {
 		if(imgUrl == null)
 			return new ImageIcon("default");
 		return new ImageIcon(imgUrl);
-	}
-	
-	public static ImageIcon[] getDefaultIcons() {
-		URL imgUrl = null;
-		ImageIcon [] icons = new ImageIcon [5];
-		imgUrl = CtrlGroup.class.getResource("/data/icon/document-open.png");
-		icons[0] = new ImageIcon(imgUrl);
-		imgUrl = CtrlGroup.class.getResource("/data/icon/list-add.png");
-		icons[1] = new ImageIcon(imgUrl);
-		imgUrl = CtrlGroup.class.getResource("/data/icon/document-properties.png");
-		icons[2] = new ImageIcon(imgUrl);
-		imgUrl = CtrlGroup.class.getResource("/data/icon/document-save.png");
-		icons[3] = new ImageIcon(imgUrl);
-		imgUrl = CtrlGroup.class.getResource("/data/icon/document-print.png");
-		icons[4] = new ImageIcon(imgUrl);		
-		return icons;
 	}
 
 	public static Image getMainWindowIcon(Toolkit tk) {
@@ -131,45 +113,5 @@ public class CtrlGroup {
 			i++;
 		}
 		CtrlFinals.createDefaultFinals(worldCup);
-	}
-
-	public static void calculateGroupTable(Group group) {
-		Team home, guest;
-		for (Team team : group.getTeams()){
-			team.clearTeam();
-		}
-		group.setGroupCompleted(true);
-		for (Game game : group.getGames()) {
-			home = game.getTeamH();
-			guest = game.getTeamG();
-			if(game.isPlayed()){
-				home.setPlayed(home.getPlayed()+1);
-				home.setGf(home.getGf()+game.getGoalsH());
-				home.setGa(home.getGa()+game.getGoalsG());
-				guest.setPlayed(guest.getPlayed()+1);
-				guest.setGf(guest.getGf()+game.getGoalsG());
-				guest.setGa(guest.getGa()+game.getGoalsH());
-				if(game.getGoalsH() > game.getGoalsG()){
-					home.setWon(home.getWon()+1);
-					home.setPoints(home.getPoints()+3);
-					guest.setLoss(guest.getLoss()+1);
-				}	
-				else if(game.getGoalsH() < game.getGoalsG()){
-					home.setLoss(home.getLoss()+1);
-					guest.setWon(guest.getWon()+1);
-					guest.setPoints(guest.getPoints()+3);
-				}	
-				else {
-					home.setDraw(home.getDraw()+1);
-					home.setPoints(home.getPoints()+1);
-					guest.setDraw(guest.getDraw()+1);
-					guest.setPoints(guest.getPoints()+1);
-				}			
-			}
-			else
-				group.setGroupCompleted(false);
-		}
-		Collections.sort(group.getTeams());
-	}
-		
+	}	
 }
