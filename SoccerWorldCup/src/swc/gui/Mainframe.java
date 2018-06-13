@@ -1,5 +1,5 @@
 package swc.gui;
-
+import org.apache.commons.csv.*;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -11,28 +11,21 @@ import java.awt.event.ActionListener;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Locale;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JToolBar;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import swc.ctrl.CtrlFinals;
 import swc.ctrl.CtrlGroup;
 import swc.ctrl.Print;
+import swc.data.Game;
+import swc.data.Group;
 import swc.data.SoccerWC;
+import swc.data.Team;
 
 
 public class Mainframe extends javax.swing.JFrame {
@@ -88,6 +81,12 @@ public class Mainframe extends javax.swing.JFrame {
 			//---- menuItemLoadWC ----
 			menuItemLoadWC.setText("Load World Cup");
 			menuFile.add(menuItemLoadWC);
+			menuItemLoadWC.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					menuItemLoadWCActionPerformed(e);
+				}
+			});
 			
 			//---- menuItemNewWC ----
 			menuItemNewWC.setText("New World Cup");
@@ -103,11 +102,22 @@ public class Mainframe extends javax.swing.JFrame {
 			//---- menuItemSave ----
 			menuItemSave.setText("Save");
 		menuFile.add(menuItemSave);
+		menuItemSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				menuItemSaveAsActionPerformed(e);
+			}
+		});
 			
 			//---- menuItemSaveAs ----
 			menuItemSaveAs.setText("Save As...");
 			menuFile.add(menuItemSaveAs);
-			
+			menuItemSaveAs.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					menuItemSaveAsActionPerformed(e);
+				}
+			});
 			menuFile.addSeparator();
 			
 			//---- menuItemExit ----
@@ -251,6 +261,99 @@ public class Mainframe extends javax.swing.JFrame {
 				"Created by Martin Liebrecht and Florian Rapp, administered by Kevin Andrews.\n" +
 				"To get information regarding this tool contact kevin.andrews@uni-ulm.de.";
 		JOptionPane.showMessageDialog(this, message, "Soccer World Cup 2018", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	private void menuItemSaveAsActionPerformed(ActionEvent e){
+		/* An dieser Stelle muss org.apache.commons.csv.* korrekt eingebunden sein!!!
+		Ich habe alles in IntelliJ eingebunden und hoffe, dass das beim Eclipse Export vermerkt wird.
+		Ansonsten liegt die Library auch im Projektordner.
+		 */
+
+
+
+		if(worldCup==null){
+			JOptionPane.showMessageDialog(this, "No WC loaded!", "Alert", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		JFileChooser fileChooser = new JFileChooser();
+		File file;
+		if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			file = fileChooser.getSelectedFile();
+
+			try {
+				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+				CSVPrinter csvPrinter = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
+
+				for (Group group : worldCup.getGroups()) {
+					//Gruppenname
+					csvPrinter.printRecord(worldCup.getName().toString());
+					csvPrinter.printRecord(group.getStrGroupName());
+
+					//Scoreboard
+					//Teams:
+					csvPrinter.printRecord("Teams:");
+					csvPrinter.printRecord("Position", "Team", "Played", "Won", "Draw", "Loss", "GF", "GA", "Points");
+					int count = 0;
+					for (Team team : group.getTeams()) {
+						csvPrinter.printRecord(count, team.getName(), team.getPlayed(), team.getWon(), team.getDraw(), team.getLoss(), team.getGf(), team.getGa(), team.getPoints());
+						count++;
+					}
+					//Games:
+					csvPrinter.printRecord("Games:");
+					csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
+					for (Game game : group.getGames()) {
+						csvPrinter.printRecord(game.getIntId(), game.getDate(), game.getTime(), game.getLocation(), game.getTeamH().getName(), game.getTeamG().getName(),
+								game.getGoalsH(), game.getGoalsG(), Boolean.toString(game.isPlayed()));
+					}
+
+
+				}
+				//Finals:
+				csvPrinter.print("Finals:");
+				//Round of 16:
+				csvPrinter.print("Round of 16:");
+				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
+				for (Game game : worldCup.getFinals().getRoundOf16()) {
+					csvPrinter.printRecord(game.getIntId(), game.getDate(), game.getTime(), game.getLocation(), game.getTeamH().getName(), game.getTeamG().getName(),
+							game.getGoalsH(), game.getGoalsG(), Boolean.toString(game.isPlayed()));
+				}
+
+				//Quarterfinals
+				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
+				for (Game game : worldCup.getFinals().getQuarterFinals()) {
+					csvPrinter.printRecord(game.getIntId(), game.getDate(), game.getTime(), game.getLocation(), game.getTeamH().getName(), game.getTeamG().getName(),
+							game.getGoalsH(), game.getGoalsG(), Boolean.toString(game.isPlayed()));
+				}
+
+				//Semifinals:
+				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
+				for (Game game : worldCup.getFinals().getSemiFinals()) {
+					csvPrinter.printRecord(game.getIntId(), game.getDate(), game.getTime(), game.getLocation(), game.getTeamH().getName(), game.getTeamG().getName(),
+							game.getGoalsH(), game.getGoalsG(), Boolean.toString(game.isPlayed()));
+				}
+
+				//Match for 3rd Place:
+				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
+				Game gamethird = worldCup.getFinals().getThirdGame();
+				csvPrinter.printRecord(gamethird.getIntId(), gamethird.getDate(), gamethird.getTime(), gamethird.getLocation(), gamethird.getTeamH().getName(), gamethird.getTeamG().getName(),
+						gamethird.getGoalsH(), gamethird.getGoalsG(), Boolean.toString(gamethird.isPlayed()));
+
+				//Final:
+				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
+				Game gamefinal = worldCup.getFinals().getFinalGame();
+				csvPrinter.printRecord(gamefinal.getIntId(), gamefinal.getDate(), gamefinal.getTime(), gamefinal.getLocation(), gamefinal.getTeamH().getName(), gamefinal.getTeamG().getName(),
+						gamefinal.getGoalsH(), gamefinal.getGoalsG(), Boolean.toString(gamefinal.isPlayed()));
+
+				csvPrinter.close();
+
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	private void menuItemLoadWCActionPerformed(ActionEvent e){
+
 	}
 
 	private void initializeTabContainer() {

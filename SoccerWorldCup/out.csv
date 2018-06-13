@@ -1,0 +1,149 @@
+sercfr
+Group A
+Teams:
+Position,Team,Played,Won,Draw,Loss,GF,GA,Points
+0,Russia,0,0,0,0,0,0,0
+1,Saudi Arabia,0,0,0,0,0,0,0
+2,Egypt,0,0,0,0,0,0,0
+3,Uruguay,0,0,0,0,0,0,0
+Games:
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+1,14/06,17:00,Moscow,Russia,Saudi Arabia,0,0,false
+2,15/06,14:00,Yekaterinburg,Egypt,Uruguay,0,0,false
+17,19/06,20:00,Saint Petersburg,Russia,Egypt,0,0,false
+18,20/06,17:00,Rostov-on-Don,Uruguay,Saudi Arabia,0,0,false
+33,25/06,16:00,Samara,Uruguay,Russia,0,0,false
+34,25/06,16:00,Volgograd,Saudi Arabia,Egypt,0,0,false
+sercfr
+Group B
+Teams:
+Position,Team,Played,Won,Draw,Loss,GF,GA,Points
+0,Portugal,0,0,0,0,0,0,0
+1,Spain,0,0,0,0,0,0,0
+2,Morocco,0,0,0,0,0,0,0
+3,Iran,0,0,0,0,0,0,0
+Games:
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+3,15/06,20:00,Sochi,Portugal,Spain,0,0,false
+4,15/06,17:00,Saint Petersburg,Morocco,Iran,0,0,false
+19,20/06,14:00,Moscow,Portugal,Morocco,0,0,false
+20,20/06,20:00,Kazan,Iran,Spain,0,0,false
+35,25/06,20:00,Saransk,Iran,Portugal,0,0,false
+36,25/06,20:00,Kaliningrad,Spain,Morocco,0,0,false
+sercfr
+Group C
+Teams:
+Position,Team,Played,Won,Draw,Loss,GF,GA,Points
+0,France,0,0,0,0,0,0,0
+1,Australia,0,0,0,0,0,0,0
+2,Peru,0,0,0,0,0,0,0
+3,Denmark,0,0,0,0,0,0,0
+Games:
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+5,16/06,12:00,Kazan,France,Australia,0,0,false
+6,16/06,18:00,Saransk,Peru,Denmark,0,0,false
+21,21/06,17:00,Yekaterinburg,France,Peru,0,0,false
+22,21/06,14:00,Samara,Denmark,Australia,0,0,false
+37,26/06,16:00,Moscow,Denmark,France,0,0,false
+38,26/06,17:00,Sochi,Australia,Peru,0,0,false
+sercfr
+Group D
+Teams:
+Position,Team,Played,Won,Draw,Loss,GF,GA,Points
+0,Argentina,0,0,0,0,0,0,0
+1,Iceland,0,0,0,0,0,0,0
+2,Croatia,0,0,0,0,0,0,0
+3,Nigeria,0,0,0,0,0,0,0
+Games:
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+7,16/06,15:00,Moscow,Argentina,Iceland,0,0,false
+8,16/06,21:00,Kaliningrad,Croatia,Nigeria,0,0,false
+23,21/06,20:00,Nizhny Novgorod,Argentina,Croatia,0,0,false
+24,22/06,17:00,Volgograd,Nigeria,Iceland,0,0,false
+39,26/06,20:00,Saint Petersburg,Nigeria,Argentina,0,0,false
+40,26/06,20:00,Rostov-on-Don,Iceland,Croatia,0,0,false
+sercfr
+Group E
+Teams:
+Position,Team,Played,Won,Draw,Loss,GF,GA,Points
+0,Brazil,0,0,0,0,0,0,0
+1,Switzerland,0,0,0,0,0,0,0
+2,Costa Rica,0,0,0,0,0,0,0
+3,Serbia,0,0,0,0,0,0,0
+Games:
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+9,17/06,20:00,Rostov-on-Don,Brazil,Switzerland,0,0,false
+10,17/06,14:00,Samara,Costa Rica,Serbia,0,0,false
+25,22/06,14:00,Saint Petersburg,Brazil,Costa Rica,0,0,false
+26,22/06,20:00,Kaliningrad,Serbia,Switzerland,0,0,false
+41,27/06,20:00,Moscow,Serbia,Brazil,0,0,false
+42,27/06,20:00,Nizhny Novgorod,Switzerland,Costa Rica,0,0,false
+sercfr
+Group F
+Teams:
+Position,Team,Played,Won,Draw,Loss,GF,GA,Points
+0,Germany,0,0,0,0,0,0,0
+1,Mexico,0,0,0,0,0,0,0
+2,Sweden,0,0,0,0,0,0,0
+3,South Korea,0,0,0,0,0,0,0
+Games:
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+11,17/06,17:00,Moscow,Germany,Mexico,0,0,false
+12,18/06,14:00,Nizhny Novgorod,Sweden,South Korea,0,0,false
+27,23/06,20:00,Sochi,Germany,Sweden,0,0,false
+28,23/06,17:00,Rostov-on-Don,South Korea,Mexico,0,0,false
+43,27/06,16:00,Kazan,South Korea,Germany,0,0,false
+44,27/06,16:00,Yekaterinburg,Mexico,Sweden,0,0,false
+sercfr
+Group G
+Teams:
+Position,Team,Played,Won,Draw,Loss,GF,GA,Points
+0,Belgium,0,0,0,0,0,0,0
+1,Panama,0,0,0,0,0,0,0
+2,Tunisia,0,0,0,0,0,0,0
+3,England,0,0,0,0,0,0,0
+Games:
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+13,18/06,17:00,Sochi,Belgium,Panama,0,0,false
+14,18/06,20:00,Volgograd,Tunisia,England,0,0,false
+29,23/06,14:00,Moscow,Belgium,Tunisia,0,0,false
+30,24/06,14:00,Nizhny Novgorod,England,Panama,0,0,false
+45,28/06,20:00,Kaliningrad,England,Belgium,0,0,false
+46,28/06,20:00,Saransk,Panama,Tunisia,0,0,false
+sercfr
+Group H
+Teams:
+Position,Team,Played,Won,Draw,Loss,GF,GA,Points
+0,Poland,0,0,0,0,0,0,0
+1,Senegal,0,0,0,0,0,0,0
+2,Colombia,0,0,0,0,0,0,0
+3,Japan,0,0,0,0,0,0,0
+Games:
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+15,19/06,17:00,Moscow,Poland,Senegal,0,0,false
+16,19/06,14:00,Saransk,Colombia,Japan,0,0,false
+31,24/06,17:00,Kazan,Poland,Colombia,0,0,false
+32,24/06,20:00,Yekaterinburg,Japan,Senegal,0,0,false
+47,28/06,16:00,Volgograd,Japan,Poland,0,0,false
+48,28/06,16:00,Samara,Senegal,Colombia,0,0,false
+Finals:,Round of 16:Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+49,30/06,16:00,Sochi,1A,2B,0,0,false
+50,30/06,20:00,Kazan,1C,2D,0,0,false
+51,01/07,16:00,Moscow,1B,2A,0,0,false
+52,01/07,20:00,Nizhny Novgorod,1D,2C,0,0,false
+53,02/07,16:00,Samara,1E,2F,0,0,false
+54,02/07,20:00,Rostov-on-Don,1G,2H,0,0,false
+55,03/07,16:00,Saint Petersburg,1F,2E,0,0,false
+56,03/07,20:00,Moscow,1H,2G,0,0,false
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+57,06/07,16:00,Nizhny Novgorod,W49,W50,0,0,false
+58,06/07,20:00,Kazan,W53,W54,0,0,false
+59,07/07,20:00,Sochi,W51,W52,0,0,false
+60,07/07,16:00,Samara,W55,W56,0,0,false
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+61,10/07,20:00,Saint Petersburg,W57,W58,0,0,false
+62,11/07,20:00,Moscow,W59,W60,0,0,false
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+63,14/07,16:00,Saint Petersburg,L61,L62,0,0,false
+Gameid,Date,Time,Venue,Home Team,Guest Team,GH,GG,IsPlayed
+64,15/07,17:00,Moscow,W61,W62,0,0,false
