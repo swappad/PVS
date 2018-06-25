@@ -17,7 +17,8 @@ import swc.data.Game;
 import swc.data.Group;
 import swc.data.SoccerWC;
 import swc.data.Team;
-
+import swc.pers.ReadWC;
+import swc.pers.WriteWC;
 
 public class CtrlGroup {
 	
@@ -131,6 +132,37 @@ public class CtrlGroup {
 			i++;
 		}
 		CtrlFinals.createDefaultFinals(worldCup);
+	}
+
+	public static boolean saveWC(SoccerWC worldCup) {
+		String filename = worldCup.getFilename();
+		try {
+			if (filename.toLowerCase().endsWith(".xml"))
+				WriteWC.writeToXML(filename, worldCup);
+			else if (filename.toLowerCase().endsWith(".csv"))
+				WriteWC.writeToCSV(filename, worldCup);
+			else
+				throw new IOException("Not a valid World Cup File");
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean loadFile(SoccerWC worldCup, String filename) {
+		try {
+			if (filename.toLowerCase().endsWith(".xml"))
+				ReadWC.readFromXML(filename, worldCup);
+			else if (filename.toLowerCase().endsWith(".csv"))
+				ReadWC.readFromCSV(filename,worldCup);
+			else
+				throw new IOException("Not a valid World Cup File");
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+			return false;
+		}
+		return true;			
 	}
 
 	public static void calculateGroupTable(Group group) {

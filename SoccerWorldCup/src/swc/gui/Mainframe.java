@@ -1,5 +1,5 @@
 package swc.gui;
-import org.apache.commons.csv.*;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -11,56 +11,67 @@ import java.awt.event.ActionListener;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Locale;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JToolBar;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import swc.ctrl.CtrlFinals;
 import swc.ctrl.CtrlGroup;
 import swc.ctrl.Print;
-import swc.data.Game;
-import swc.data.Group;
 import swc.data.SoccerWC;
-import swc.data.Team;
-
 
 public class Mainframe extends javax.swing.JFrame {
 	private static final long serialVersionUID = 632345753774989L;
-	private ImageIcon [] icons;
+	private ImageIcon[] icons;
 	private SoccerWC worldCup;
 	private FinalsPanel finals;
-	
+
 	public Mainframe(SoccerWC toOpen) {
 
 		try {
 			java.util.Locale.setDefault(Locale.ENGLISH);
-			UIManager.put("OptionPane.yesButtonText","Yes");
-			UIManager.put("OptionPane.noButtonText","No");
+			UIManager.put("OptionPane.yesButtonText", "Yes");
+			UIManager.put("OptionPane.noButtonText", "No");
 			UIManager.put("OptionPane.cancelButtonText", "Cancel");
-			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager
+					.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 		worldCup = toOpen;
-	    initComponents();
-	    displayDialog();
+		initComponents();
+		displayDialog();
 	}
 
 	/**
 	 * Initializes components, listener, etc.
 	 */
-	private void initComponents() {	
-		
-		//initialize Components
+	private void initComponents() {
+
+		// initialize Components
 		menuBar = new JMenuBar();
 		menuFile = new JMenu();
 		menuExtra = new JMenu();
 		menuHelp = new JMenu();
 		menuItemLoadWCfromServer = new JMenuItem();
+		menuItemExportCSV = new JMenuItem();
 		menuItemAbout = new JMenuItem();
 		menuItemWCBetting = new JMenuItem();
 		menuItemLoadWC = new JMenuItem();
@@ -70,99 +81,100 @@ public class Mainframe extends javax.swing.JFrame {
 		menuItemExit = new JMenuItem();
 		tabContainer = new JTabbedPane();
 		toolBar = new JToolBar();
-	
-		//prepare frame
+
+		// prepare frame
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		
-		//======== menuFile ========
-			menuFile.setText("File");
 
-			//---- menuItemLoadWC ----
-			menuItemLoadWC.setText("Load World Cup");
-			menuFile.add(menuItemLoadWC);
-			menuItemLoadWC.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					menuItemLoadWCActionPerformed(e);
-				}
-			});
-			
-			//---- menuItemNewWC ----
-			menuItemNewWC.setText("New World Cup");
-			menuItemNewWC.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					menuItemNewWCActionPerformed(e);
-				}
-			});
-			menuFile.add(menuItemNewWC);
-			
-			menuFile.addSeparator();
-			
-			//---- menuItemSave ----
-			menuItemSave.setText("Save");
-		menuFile.add(menuItemSave);
+		// ======== menuFile ========
+		menuFile.setText("File");
+
+		// ---- menuItemLoadWC ----
+		menuItemLoadWC.setText("Load World Cup");
+		menuItemLoadWC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuItemLoadWCActionPerformed(e);
+			}
+		});
+		menuFile.add(menuItemLoadWC);
+
+		// ---- menuItemNewWC ----
+		menuItemNewWC.setText("New World Cup");
+		menuItemNewWC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuItemNewWCActionPerformed(e);
+			}
+		});
+		menuFile.add(menuItemNewWC);
+
+		menuFile.addSeparator();
+
+		// ---- menuItemSave ----
+		menuItemSave.setText("Save");
 		menuItemSave.addActionListener(new ActionListener() {
-			@Override
+			public void actionPerformed(ActionEvent e) {
+				menuItemSaveActionPerformed(e);
+			}
+		});
+		menuFile.add(menuItemSave);
+
+		// ---- menuItemSaveAs ----
+		menuItemSaveAs.setText("Save As...");
+		menuItemSaveAs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				menuItemSaveAsActionPerformed(e);
 			}
 		});
-			
-			//---- menuItemSaveAs ----
-			menuItemSaveAs.setText("Save As...");
-			menuFile.add(menuItemSaveAs);
-			menuItemSaveAs.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					menuItemSaveAsActionPerformed(e);
-				}
-			});
-			menuFile.addSeparator();
-			
-			//---- menuItemExit ----
-			menuItemExit.setText("Exit");
-			menuItemExit.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					menuItemExitActionPerformed(e);
-				}
-			});
-			menuFile.add(menuItemExit);
-			
+		menuFile.add(menuItemSaveAs);
+
+		menuFile.addSeparator();
+
+		// ---- menuItemExit ----
+		menuItemExit.setText("Exit");
+		menuItemExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuItemExitActionPerformed(e);
+			}
+		});
+		menuFile.add(menuItemExit);
+
 		menuBar.add(menuFile);
-		
-		
-		//======== menuExtra ========
-			menuExtra.setText("Extra");
-	
-			//---- menuItemWCBetting ----
-			menuItemWCBetting.setText("World Cup betting");
-			menuExtra.add(menuItemWCBetting);
-			
-			//---- menuItemLoadWCfromServer ----
-			menuItemLoadWCfromServer.setText("Load from sever...");
-			menuExtra.add(menuItemLoadWCfromServer);
-		
-		menuBar.add(menuExtra);	
-		
-		
-		//======== menuHelp ========
-			menuHelp.setText("Help");
-	
-			//---- menuItemAbout ----
-			menuItemAbout.setText("About");
-			menuItemAbout.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					menuItemAboutActionPerformed(e);
-				}
-			});
-			menuHelp.add(menuItemAbout);
-			
-		menuBar.add(menuHelp);	
-		
-		//======== Toolbar ========
-		
-		toolBar.setLayout(new BoxLayout(toolBar,BoxLayout.LINE_AXIS));
+
+		// ======== menuExtra ========
+		menuExtra.setText("Extra");
+
+		// ---- menuItemWCBetting ----
+		menuItemWCBetting.setText("World Cup betting");
+		menuItemWCBetting.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuItemWCBettingActionPerformed(e);
+			}
+		});
+		menuExtra.add(menuItemWCBetting);
+
+		// ---- menuItemLoadWCfromServer ----
+		menuItemLoadWCfromServer.setText("Load from sever...");
+		menuExtra.add(menuItemLoadWCfromServer);
+
+		menuBar.add(menuExtra);
+
+		// ======== menuHelp ========
+		menuHelp.setText("Help");
+
+		// ---- menuItemAbout ----
+		menuItemAbout.setText("About");
+		menuItemAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuItemAboutActionPerformed(e);
+			}
+		});
+		menuHelp.add(menuItemAbout);
+
+		menuBar.add(menuHelp);
+
+		// ======== Toolbar ========
+
+		toolBar.setLayout(new BoxLayout(toolBar, BoxLayout.LINE_AXIS));
 
 		toolBar.add(new JLabel(" World Cup:   "));
 		wcName = new JLabel();
@@ -172,14 +184,18 @@ public class Mainframe extends javax.swing.JFrame {
 		wcStatus = new JLabel();
 		wcStatus.setFont(new Font("Arial", Font.BOLD, 11));
 		toolBar.add(wcStatus);
-				
+
 		toolBar.add(Box.createHorizontalGlue());
-		
+
 		icons = CtrlGroup.getDefaultIcons();
 
 		buttonOpen = new JButton(icons[0]);
 		buttonOpen.setToolTipText("Open World Cup");
-	
+		buttonOpen.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				menuItemLoadWCActionPerformed(e);
+			}
+		});
 		buttonNew = new JButton(icons[1]);
 		buttonNew.setToolTipText("Create New World Cup");
 		buttonNew.addActionListener(new java.awt.event.ActionListener() {
@@ -187,11 +203,15 @@ public class Mainframe extends javax.swing.JFrame {
 				menuItemNewWCActionPerformed(e);
 			}
 		});
-		//buttonEdit = new JButton(icons[2]);
-		//buttonEdit.setToolTipText("Edit current Group");
+		// buttonEdit = new JButton(icons[2]);
+		// buttonEdit.setToolTipText("Edit current Group");
 		buttonSave = new JButton(icons[3]);
 		buttonSave.setToolTipText("Save World Cup");
-	
+		buttonSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				menuItemSaveActionPerformed(e);
+			}
+		});
 		buttonPrint = new JButton(icons[4]);
 		buttonPrint.setToolTipText("Print current Group");
 		buttonPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -201,34 +221,46 @@ public class Mainframe extends javax.swing.JFrame {
 		});
 		toolBar.add(buttonOpen);
 		toolBar.add(buttonNew);
-		//toolBar.add(buttonEdit);
+		// toolBar.add(buttonEdit);
 		toolBar.add(buttonSave);
 		toolBar.add(buttonPrint);
 		toolBar.setVisible(false);
 		toolBar.setFloatable(false);
-	
-		//======== adding components ========
-		
+
+		// ======== adding components ========
+
+		// ======== disabling menu ========
+		menuItemSave.setEnabled(false);
+		menuItemSaveAs.setEnabled(false);
+		menuItemWCBetting.setEnabled(false);
+		menuItemExportCSV.setEnabled(false);
+
 		setJMenuBar(menuBar);
 		contentPane.add(toolBar, BorderLayout.PAGE_START);
 		contentPane.add(tabContainer);
 	}
 
-	protected void buttonPrintActionPerformed(ActionEvent e) {
-		try {
-	    	PrinterJob objPrinterJob = PrinterJob.getPrinterJob();
-	    	if (objPrinterJob.printDialog()) {
-	            PageFormat objPageFormat = objPrinterJob.pageDialog(objPrinterJob.defaultPage());
+	protected void menuItemWCBettingActionPerformed(ActionEvent e) {
+		BettingDialog bd = new BettingDialog(this, worldCup);
+		bd.setVisible(true);
+	}
 
-	            Component toPrint = tabContainer.getSelectedComponent();
-	            if(toPrint instanceof JScrollPane)
-	            	toPrint = ((JScrollPane) toPrint).getViewport().getComponent(0);
-	            objPrinterJob.setPrintable(new Print(toPrint), objPageFormat);
-	            objPrinterJob.print();        
-	        }
-	    } catch (PrinterException objException) {
-	    	objException.printStackTrace();
-	    }
+	protected void buttonPrintActionPerformed(ActionEvent e) {
+		 try {
+		 PrinterJob objPrinterJob = PrinterJob.getPrinterJob();
+		 if (objPrinterJob.printDialog()) {
+		 PageFormat objPageFormat =
+		 objPrinterJob.pageDialog(objPrinterJob.defaultPage());
+		
+		 Component toPrint = tabContainer.getSelectedComponent();
+		 if(toPrint instanceof JScrollPane)
+		 toPrint = ((JScrollPane) toPrint).getViewport().getComponent(0);
+		 objPrinterJob.setPrintable(new Print(toPrint), objPageFormat);
+		 objPrinterJob.print();
+		 }
+		 } catch (PrinterException objException) {
+		 objException.printStackTrace();
+		 }
 	}
 
 	protected void menuItemExitActionPerformed(ActionEvent e) {
@@ -236,132 +268,207 @@ public class Mainframe extends javax.swing.JFrame {
 		System.exit(0);
 	}
 
-	protected void menuItemNewWCActionPerformed(ActionEvent e) {
-		if(!(worldCup.getName() == null)){
-			int ok = JOptionPane.showConfirmDialog(null,"Open new World Cup? Unsaved changes will be lost!", 
-                    "Confirmation required", 
-                    JOptionPane.YES_NO_OPTION);
-			if (ok == JOptionPane.YES_OPTION){
-				CreateDialog cd = new CreateDialog(this, worldCup);
-				cd.setVisible(true);
-				if(cd.wasSuccessful())
-					initializeTabContainer();
-			}	
-		}else{
-			CreateDialog cd = new CreateDialog(this, worldCup);
-			cd.setVisible(true);
-			if(cd.wasSuccessful())
-				initializeTabContainer();
-		}
-	}
-
-	private void menuItemAboutActionPerformed(ActionEvent e) {
-		String message = "This Soccer World Cup 2018 managing program was created for " +
-				"the practices along\n with the lecture 'Programmierung von Systemen' at Ulm University, summer 2018.\n\n" +
-				"Created by Martin Liebrecht and Florian Rapp, administered by Kevin Andrews.\n" +
-				"To get information regarding this tool contact kevin.andrews@uni-ulm.de.";
-		JOptionPane.showMessageDialog(this, message, "Soccer World Cup 2018", JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	private void menuItemSaveAsActionPerformed(ActionEvent e){
-		/* An dieser Stelle muss org.apache.commons.csv.* korrekt eingebunden sein!!!
-		Ich habe alles in IntelliJ eingebunden und hoffe, dass das beim Eclipse Export vermerkt wird.
-		Ansonsten liegt die Library auch im Projektordner.
-		 */
-
-
-
-		if(worldCup==null){
-			JOptionPane.showMessageDialog(this, "No WC loaded!", "Alert", JOptionPane.ERROR_MESSAGE);
+	protected void menuItemSaveActionPerformed(ActionEvent e) {
+		if (worldCup.getFilename() == null
+				|| worldCup.getFilename().length() == 0) {
+			menuItemSaveAsActionPerformed(e);
 			return;
 		}
-		JFileChooser fileChooser = new JFileChooser();
-		File file;
-		if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-			file = fileChooser.getSelectedFile();
-
-			try {
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-				CSVPrinter csvPrinter = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
-
-				for (Group group : worldCup.getGroups()) {
-					//Gruppenname
-					csvPrinter.printRecord(worldCup.getName().toString());
-					csvPrinter.printRecord(group.getStrGroupName());
-
-					//Scoreboard
-					//Teams:
-					csvPrinter.printRecord("Teams:");
-					csvPrinter.printRecord("Position", "Team", "Played", "Won", "Draw", "Loss", "GF", "GA", "Points");
-					int count = 0;
-					for (Team team : group.getTeams()) {
-						csvPrinter.printRecord(count, team.getName(), team.getPlayed(), team.getWon(), team.getDraw(), team.getLoss(), team.getGf(), team.getGa(), team.getPoints());
-						count++;
-					}
-					//Games:
-					csvPrinter.printRecord("Games:");
-					csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
-					for (Game game : group.getGames()) {
-						csvPrinter.printRecord(game.getIntId(), game.getDate(), game.getTime(), game.getLocation(), game.getTeamH().getName(), game.getTeamG().getName(),
-								game.getGoalsH(), game.getGoalsG(), Boolean.toString(game.isPlayed()));
-					}
-
-
-				}
-				//Finals:
-				csvPrinter.print("Finals:");
-				//Round of 16:
-				csvPrinter.print("Round of 16:");
-				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
-				for (Game game : worldCup.getFinals().getRoundOf16()) {
-					csvPrinter.printRecord(game.getIntId(), game.getDate(), game.getTime(), game.getLocation(), game.getTeamH().getName(), game.getTeamG().getName(),
-							game.getGoalsH(), game.getGoalsG(), Boolean.toString(game.isPlayed()));
-				}
-
-				//Quarterfinals
-				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
-				for (Game game : worldCup.getFinals().getQuarterFinals()) {
-					csvPrinter.printRecord(game.getIntId(), game.getDate(), game.getTime(), game.getLocation(), game.getTeamH().getName(), game.getTeamG().getName(),
-							game.getGoalsH(), game.getGoalsG(), Boolean.toString(game.isPlayed()));
-				}
-
-				//Semifinals:
-				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
-				for (Game game : worldCup.getFinals().getSemiFinals()) {
-					csvPrinter.printRecord(game.getIntId(), game.getDate(), game.getTime(), game.getLocation(), game.getTeamH().getName(), game.getTeamG().getName(),
-							game.getGoalsH(), game.getGoalsG(), Boolean.toString(game.isPlayed()));
-				}
-
-				//Match for 3rd Place:
-				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
-				Game gamethird = worldCup.getFinals().getThirdGame();
-				csvPrinter.printRecord(gamethird.getIntId(), gamethird.getDate(), gamethird.getTime(), gamethird.getLocation(), gamethird.getTeamH().getName(), gamethird.getTeamG().getName(),
-						gamethird.getGoalsH(), gamethird.getGoalsG(), Boolean.toString(gamethird.isPlayed()));
-
-				//Final:
-				csvPrinter.printRecord("Gameid", "Date", "Time", "Venue", "Home Team", "Guest Team", "GH", "GG", "IsPlayed");
-				Game gamefinal = worldCup.getFinals().getFinalGame();
-				csvPrinter.printRecord(gamefinal.getIntId(), gamefinal.getDate(), gamefinal.getTime(), gamefinal.getLocation(), gamefinal.getTeamH().getName(), gamefinal.getTeamG().getName(),
-						gamefinal.getGoalsH(), gamefinal.getGoalsG(), Boolean.toString(gamefinal.isPlayed()));
-
-				csvPrinter.close();
-
-			} catch (IOException e1) {
-				e1.printStackTrace();
+		if (!worldCup.getName().equals("")) {
+			boolean ret = CtrlGroup.saveWC(worldCup);
+			if (!ret) {
+				JOptionPane.showMessageDialog(this,
+						"An error occured on saving current world cup.",
+						"Save World Cup", JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(this, "Saving successful!",
+						"Save World Cup", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
 
-	private void menuItemLoadWCActionPerformed(ActionEvent e){
+	protected void menuItemSaveAsActionPerformed(ActionEvent e) {
+		if (!(worldCup.getName() == null)) {
+			String filename;
+			JFileChooser chooser = new JFileChooser();
+			// setting up the file filter
+			FileFilter csvFileFilter = new FileNameExtensionFilter(
+					"Comma Separated Values (.csv)", "csv");
+			FileFilter xmlFileFilter = new FileNameExtensionFilter(
+					"eXtensible Markup Language (.xml)", "xml");
+			chooser.addChoosableFileFilter(xmlFileFilter);
+			chooser.addChoosableFileFilter(csvFileFilter);
+			chooser.setAcceptAllFileFilterUsed(false);
+			chooser.setFileFilter(csvFileFilter); // default filter
 
+			int returnVal = chooser.showSaveDialog(this);
+
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				filename = chooser.getSelectedFile().getPath();
+
+				// ensure correct extension
+				FileNameExtensionFilter filter = (FileNameExtensionFilter) chooser
+						.getFileFilter();
+				if (!filter.accept(chooser.getSelectedFile()))
+					filename = filename + "." + filter.getExtensions()[0];
+
+			} else {
+				return;
+			}
+
+			worldCup.setFilename(filename);
+			boolean ret = CtrlGroup.saveWC(worldCup);
+			if (!ret) {
+				JOptionPane.showMessageDialog(this,
+						"An error occured on saving current world cup.",
+						"Save World Cup", JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(this, "Saving successful!",
+						"Save World Cup", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+	}
+
+	protected void menuItemNewWCActionPerformed(ActionEvent e) {
+		if (!(worldCup.getName() == null)) {
+			int ok = JOptionPane.showConfirmDialog(null,
+					"Open new World Cup? Unsaved changes will be lost!",
+					"Confirmation required", JOptionPane.YES_NO_OPTION);
+			if (ok == JOptionPane.YES_OPTION) {
+				CreateDialog cd = new CreateDialog(this, worldCup);
+				cd.setVisible(true);
+				if (cd.wasSuccessful()) {
+					initializeTabContainer();
+					enableMenu();
+				}
+			}
+		} else {
+			CreateDialog cd = new CreateDialog(this, worldCup);
+			cd.setVisible(true);
+			if (cd.wasSuccessful()) {
+				initializeTabContainer();
+				enableMenu();
+			}
+		}
+	}
+
+	protected void menuItemLoadWCActionPerformed(String filename) {
+		if (!(worldCup.getName() == null)) {
+			int ok = JOptionPane.showConfirmDialog(null,
+					"Open new World Cup? Unsaved changes will be lost!",
+					"Confirmation required", JOptionPane.YES_NO_OPTION);
+			if (ok == JOptionPane.YES_OPTION) {
+				boolean ret = CtrlGroup.loadFile(worldCup, filename);
+				if (!ret) {
+					JOptionPane.showMessageDialog(this,
+							"An error occured on loading world cup.",
+							"Save World Cup", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				initializeTabContainer();
+				callFinalCalucalion();
+			}
+		} else {
+			boolean ret = CtrlGroup.loadFile(worldCup, filename);
+			if (!ret) {
+				JOptionPane.showMessageDialog(this,
+						"An error occured on loading world cup.",
+						"Save World Cup", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			enableMenu();
+			initializeTabContainer();
+			callFinalCalucalion();
+		}
+	}
+
+	protected void menuItemLoadWCActionPerformed(ActionEvent e) {
+		FileFilter csvFileFilter = new FileNameExtensionFilter(
+				"Comma Separated Values (.csv)", "csv");
+		FileFilter xmlFileFilter = new FileNameExtensionFilter(
+				"eXtensible Markup Language (.xml)", "xml");
+		if (!(worldCup.getName() == null)) {
+			int ok = JOptionPane.showConfirmDialog(null,
+					"Open new World Cup? Unsaved changes will be lost!",
+					"Confirmation required", JOptionPane.YES_NO_OPTION);
+			if (ok == JOptionPane.YES_OPTION) {
+				String filename;
+				JFileChooser chooser = new JFileChooser();
+				chooser.addChoosableFileFilter(xmlFileFilter);
+				chooser.addChoosableFileFilter(csvFileFilter);
+				chooser.setAcceptAllFileFilterUsed(false);
+				chooser.setFileFilter(xmlFileFilter); // default filter
+
+				int returnVal = chooser.showOpenDialog(this);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					filename = chooser.getSelectedFile().getPath();
+
+					// ensure correct extension
+					FileNameExtensionFilter filter = (FileNameExtensionFilter) chooser
+							.getFileFilter();
+					if (!filter.accept(chooser.getSelectedFile()))
+						filename = filename + "." + filter.getExtensions()[0];
+				} else {
+					return;
+				}
+				boolean ret = CtrlGroup.loadFile(worldCup, filename);
+				if (!ret) {
+					JOptionPane.showMessageDialog(this,
+							"An error occured on loading world cup.",
+							"Load World Cup", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				initializeTabContainer();
+				enableMenu();
+			}
+		} else {
+			String filename;
+			JFileChooser chooser = new JFileChooser();
+			chooser.addChoosableFileFilter(xmlFileFilter);
+			chooser.addChoosableFileFilter(csvFileFilter);
+			chooser.setAcceptAllFileFilterUsed(false);
+			int returnVal = chooser.showOpenDialog(this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				filename = chooser.getSelectedFile().getPath();
+			} else {
+				return;
+			}
+			boolean ret = CtrlGroup.loadFile(worldCup, filename);
+			if (!ret) {
+				JOptionPane.showMessageDialog(this,
+						"An error occured on loading world cup.",
+						"Load World Cup", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			initializeTabContainer();
+			enableMenu();
+		}
+	}
+
+	protected void menuItemAboutActionPerformed(ActionEvent e) {
+		String message = "This Soccer World Cup 2018 managing program was created for "
+				+ "the practices along\n with the lecture 'Programmierung von Systemen' at Ulm University, summer 2018.\n\n"
+				+ "Created by Martin Liebrecht and Florian Rapp, administered by Kevin Andrews.\n"
+				+ "To get information regarding this tool contact kevin.andrews@uni-ulm.de.";
+		JOptionPane.showMessageDialog(this, message, "Soccer World Cup 2018",
+				JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	private void enableMenu() {
+		menuItemSave.setEnabled(true);
+		menuItemSaveAs.setEnabled(true);
+		menuItemWCBetting.setEnabled(true);
+		menuItemExportCSV.setEnabled(true);
 	}
 
 	private void initializeTabContainer() {
-		createHeadLine();	
+		createHeadLine();
 		toolBar.setVisible(true);
 		tabContainer.removeAll();
 		for (int i = 0; i < 8; i++) {
-			tabContainer.addTab(worldCup.getGroups().get(i).getStrGroupName(), new GroupPanel(this, worldCup.getGroups().get(i)));
+			tabContainer.addTab(worldCup.getGroups().get(i).getStrGroupName(),
+					new GroupPanel(this, worldCup.getGroups().get(i)));
 		}
 		JScrollPane fsp = new JScrollPane();
 		JScrollBar jsb = new JScrollBar();
@@ -388,13 +495,13 @@ public class Mainframe extends javax.swing.JFrame {
 		setSize(690, 600);
 		setResizable(false);
 		Dimension objScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	    int intTop              = (objScreenSize.height - this.getHeight()) / 2;
-	    int intLeft             = (objScreenSize.width - this.getWidth()) / 2;    
-	         
-	    setLocation(intLeft, intTop);
-	    setTitle("Soccer World Cup 2018");
-	    Toolkit tk = getToolkit();
-	    setIconImage(CtrlGroup.getMainWindowIcon(tk));
+		int intTop = (objScreenSize.height - this.getHeight()) / 2;
+		int intLeft = (objScreenSize.width - this.getWidth()) / 2;
+
+		setLocation(intLeft, intTop);
+		setTitle("Soccer World Cup 2018");
+		Toolkit tk = getToolkit();
+		setIconImage(CtrlGroup.getMainWindowIcon(tk));
 	}
 
 	public void callFinalCalucalion() {
@@ -411,6 +518,7 @@ public class Mainframe extends javax.swing.JFrame {
 	private JMenu menuHelp;
 	private JMenuItem menuItemWCBetting;
 	private JMenuItem menuItemLoadWCfromServer;
+	private JMenuItem menuItemExportCSV;
 	private JMenuItem menuItemAbout;
 	private JMenuItem menuItemLoadWC;
 	private JMenuItem menuItemNewWC;

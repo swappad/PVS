@@ -271,7 +271,7 @@ public class CtrlFinals {
 		}	
 	}
 
-	private static Team calculateWinner(Game game) {
+	public static Team calculateWinner(Game game) {
 		return game.getGoalsH() > game.getGoalsG() ? 
 				game.getTeamH() : game.getTeamG();
 	}

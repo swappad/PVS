@@ -10,14 +10,14 @@ public class SoccerWC {
 	private String filename;
 	
 	public SoccerWC(String filename, String wcName) {
-		setGroups(new Vector<Group>()); 
+		setGroups(new Vector<Group>());
 		setFinals(new Final());
 		setName(wcName);
 		setFilename(filename);
 	}
 	
 	public SoccerWC(String wcName) {
-		setGroups(new Vector<Group>()); 
+		setGroups(new Vector<Group>());
 		setFinals(new Final());
 		setName(wcName);
 	}
