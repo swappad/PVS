@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 
 import javax.swing.Box;
@@ -36,6 +38,7 @@ import swc.ctrl.CtrlFinals;
 import swc.ctrl.CtrlGroup;
 import swc.ctrl.Print;
 import swc.data.SoccerWC;
+import swc.pers.ReadWC;
 
 public class Mainframe extends javax.swing.JFrame {
 	private static final long serialVersionUID = 632345753774989L;
@@ -155,6 +158,7 @@ public class Mainframe extends javax.swing.JFrame {
 		// ---- menuItemLoadWCfromServer ----
 		menuItemLoadWCfromServer.setText("Load from sever...");
 		menuExtra.add(menuItemLoadWCfromServer);
+		menuItemLoadWCfromServer.addActionListener((e)-> {menuItemLoadWCfromServerActionPerformed(e);});
 
 		menuBar.add(menuExtra);
 
@@ -443,6 +447,17 @@ public class Mainframe extends javax.swing.JFrame {
 			}
 			initializeTabContainer();
 			enableMenu();
+		}
+	}
+
+	protected void menuItemLoadWCfromServerActionPerformed(ActionEvent e) {
+		LoadServerDialog loadServerDialog = new LoadServerDialog(this);
+		if (loadServerDialog.successfull = true) {
+			try {
+				ReadWC.readFromXML(loadServerDialog.url, this.worldCup);
+				return;
+			} catch (Exception e1) {}
+			JOptionPane.showMessageDialog(this, "Ungültige Eingabe!", "Ungültige Eingabe", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
