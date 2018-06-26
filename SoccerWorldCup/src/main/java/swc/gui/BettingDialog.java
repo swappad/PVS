@@ -15,12 +15,23 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.Scanner;
 import java.util.Vector;
+import javax.json.*;
 
+
+import javax.json.Json;
+import javax.json.stream.JsonLocation;
+import javax.json.stream.JsonParser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -34,6 +45,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+
 
 import swc.ctrl.CtrlGroup;
 import swc.data.Game;
@@ -580,11 +593,43 @@ public class BettingDialog extends JDialog {
 	//TODO IMPLEMENT
 	private Vector<Tip> downloadTipsFromServer(String betterEmail) {
 		Vector<Tip> tips = new Vector<Tip>();
+		String combinedURL = "http://swc.dbis.info/api/Betting/"+betterEmail;
+
+		try{
+			URL url = new URL(combinedURL);
+			InputStream inputStream = url.openStream();
+			JsonReader jsonReader= Json.createReader(inputStream);
+
+			JsonArray jsonArray = jsonReader.readArray();
+			for (JsonObject arr : jsonArray.getValuesAs(JsonObject.class)){
+			    tips.add(new Tip(arr.getInt("gameId"),arr.getInt("goalsHome"),arr.getInt("goalsGuest")));
+            }
+
+		}catch(MalformedURLException e1){
+		}catch(IOException e2){}
+
 		return tips;
 	}
 
 	//TODO IMPLEMENT
 	private void uploadTipsToServer(Vector<Tip> tips, String betterEmail, String betterPin) {
-		
+		for (Tip tip: tips){
+		    String combinedURL ="http://swc.dbis.info/api/Betting/"
+                    +betterEmail+"/"+betterPin+"/"+tip.getGameId()+"/"+tip.getGoalsHome() +"/"+tip.getGoalsGuest();
+		    try{
+                URL url = new URL(combinedURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                Object stage;
+                if(!(stage = bufferedReader.readLine()).equals("true")){
+                    JOptionPane.showMessageDialog(this,"Deine Wetten konnten nicht hochgeladen werden. \n Überprüfe deine Eingaben",
+                            "Fehler beim hochladen",JOptionPane.ERROR_MESSAGE);
+                }
+
+            }catch(MalformedURLException e1){
+
+            }catch(IOException e2){};
+            
+        }
 	}
 }
