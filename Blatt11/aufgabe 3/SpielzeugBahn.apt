@@ -1,0 +1,38 @@
+.name "SpielzeugBahn"
+.type PN
+
+.places
+B6
+B1
+B2
+B3
+B4
+B0
+B5
+p22
+p23
+p24
+p25
+p26
+p27
+p28
+
+.transitions
+toB1
+toB0
+toB2
+toB6
+toB3
+toB5
+toB4
+
+.flows
+toB1: {1*B0, 1*p27} -> {1*B1, 1*p28}
+toB0: {1*B6, 1*p26} -> {1*B0, 1*p25}
+toB2: {1*B1, 1*p22} -> {1*B2, 1*p26}
+toB6: {1*B5, 1*p28} -> {1*B6, 1*p24}
+toB3: {1*B2, 1*p23} -> {1*B3, 1*p27}
+toB5: {1*B4, 1*p25} -> {1*B5, 1*p23}
+toB4: {1*B3, 1*p24} -> {1*B4, 1*p22}
+
+.initial_marking {1*B4, 1*B0, 1*p22, 1*p25, 1*p27}
