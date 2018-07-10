@@ -11,7 +11,7 @@ List<String> messages = new ArrayList<>();
         Name = name;
     }
 
-    public void run(){
+    public synchronized void run(){
         messages.add("Testnachricht von "+Name) ;
         messages.add(Name +" hat seinen Senf dazu gegeben");
         bulletinBoard.publishToBoard(messages);

@@ -1,4 +1,5 @@
 package swc.gui;
+import swc.ctrl.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,6 +25,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 import javax.json.*;
@@ -49,6 +52,7 @@ import javax.swing.table.TableColumnModel;
 
 
 import swc.ctrl.CtrlGroup;
+import swc.ctrl.TipUploaderThread;
 import swc.data.Game;
 import swc.data.SoccerWC;
 import swc.data.Tip;
@@ -613,23 +617,22 @@ public class BettingDialog extends JDialog {
 
 	//TODO IMPLEMENT
 	private void uploadTipsToServer(Vector<Tip> tips, String betterEmail, String betterPin) {
-		for (Tip tip: tips){
-		    String combinedURL ="http://swc.dbis.info/api/Betting/"
-                    +betterEmail+"/"+betterPin+"/"+tip.getGameId()+"/"+tip.getGoalsHome() +"/"+tip.getGoalsGuest();
-		    try{
-                URL url = new URL(combinedURL);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                Object stage;
-                if(!(stage = bufferedReader.readLine()).equals("true")){
-                    JOptionPane.showMessageDialog(this,"Deine Wetten konnten nicht hochgeladen werden. \n Überprüfe deine Eingaben",
+		List<TipUploaderThread> tipUploaderThreads = new ArrayList<>();
+
+		tips.stream().map(tip -> new TipUploaderThread(tip, betterEmail, betterPin)).forEach(tipUploaderThread -> {
+			tipUploaderThreads.add(tipUploaderThread);
+			tipUploaderThread.start();
+		});
+
+		tipUploaderThreads.forEach(iteratorThread -> {
+			try {
+				iteratorThread.join();
+			} catch (InterruptedException e1) { }
+		});
+
+		if(tipUploaderThreads.stream().anyMatch(e -> e.getUploadStatus().equals(false))){
+			JOptionPane.showMessageDialog(this,"Deine Wetten konnten nicht hochgeladen werden. \n Überprüfe deine Eingaben",
                             "Fehler beim hochladen",JOptionPane.ERROR_MESSAGE);
-                }
-
-            }catch(MalformedURLException e1){
-
-            }catch(IOException e2){};
-            
-        }
+		}
 	}
 }
